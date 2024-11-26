@@ -57,9 +57,68 @@ Note : File name should be with HDL Extension
 
 •	fa_4bit_test.v → Test bench 
 
-*/Program to design 4 bit adder by instantiating 1 bit Full adder.also add test bench program */
-Developed by: Register Number*/
+CODE
+module full_adder(A,B,CIN,S,COUT);
 
+input A,B,CIN;
+
+output S,COUT;
+
+assign S=A^B^CIN;
+
+assign COUT=(A&B) | (CIN&(A^B));
+
+endmodule
+
+module fulladd_4bit(A,B,C0,S,C4);
+
+input [3:0] A,B;
+
+input C0;
+
+output [3:0] S;
+
+output C4;
+
+wire C1,C2,C3;
+
+full_adder fa0 (A[0],B[0],C0,S[0],C1);
+
+full_adder fa1 (A[1],B[1],C1,S[1],C2);
+
+full_adder fa2 (A[2],B[2],C2,S[2],C3);
+
+full_adder fa3 (A[3],B[3],C3,S[3],C4);
+
+endmodule
+
+module test_4bit;
+
+reg [3:0] A;
+
+reg [3:0] B; reg C0;
+
+wire [3:0] S; wire C4;
+
+fulladd_4bit dut (A,B,C0,S,C4);
+
+initial
+
+begin
+
+A=4'b0011;B=4'b0011;C0=1'b0;
+
+#10; A=4'b1011;B=4'b0111;C0=1'b1;
+
+#10; A=4'b1111;B=4'b1111;C0=1'b1;
+
+#10;
+
+end initial
+
+#50 $finish;
+
+endmodule
 ## Functional Simulation: 
 
 	Invoke the cadence environment by type the below commands 
@@ -70,8 +129,8 @@ Developed by: Register Number*/
 
       (The path of cshrc could vary depending on the installation destination)
       
-	After this you can see the window like below 
-
+	After this you can see the window like below
+![image](https://github.com/user-attachments/assets/4c318665-3823-4530-b7cd-5dc20fe1e946)
 ### Fig 3:Invoke the Cadence Environment
 
 	To Launch Simulation tool 
@@ -83,13 +142,14 @@ or
 •	linux:/> nclaunch& // On subsequent calls to NCVERILOG 
 
 	It will invoke the nclaunch window for functional simulation we can compile,elaborate and simulate it using Multiple Step .
+![image](https://github.com/user-attachments/assets/e54ba3e0-06f1-40bb-9e39-c815a2038a08)
 
 ### Fig 4:Setting Multi-step simulation
 
 	Select Multiple Step and then select “Create cds.lib File” .
 
 	Click the cds.lib file and save the file by clicking on Save option 
-
+![image](https://github.com/user-attachments/assets/907b1eae-a507-4a2e-b107-f57c35930726)
 ### Fig 5:cds.lib file Creation
 
 	Save cds.lib file and select the correct option for cds.lib file format based on the HDL Language and Libraries used. 
@@ -111,6 +171,7 @@ or
 	Worklib is the directory where all the compiled codes are stored while Snapshot will have output of elaboration which in turn goes for simulation .
 
 	To perform the function simulation, the following three steps are involved Compilation, Elaboration and Simulation. 
+![image](https://github.com/user-attachments/assets/17839667-234f-441e-b20f-a497de45dadc)
 
 ### Fig 7: Nclaunch Window
 
@@ -130,7 +191,7 @@ i.e Cadence IES command for compile: ncverilog +access+rwc -compile fa.v
 Left side select the file and in Tools : launch verilog compiler with current selection will get enable. Click it to compile the code 
 
 Worklib is the directory where all the compiled codes are stored while Snapshot will have output of elaboration which in turn goes for simulation
-
+![image](https://github.com/user-attachments/assets/bc08ce07-fc1a-4f46-9b0b-0fa4d2ffb67e)
 ### Fig 8: Compiled database in worklib
 
 	After compilation it will come under worklib you can see in right side window
@@ -153,7 +214,7 @@ i.e Cadence IES command for compile: ncverilog +access+rwc -compile fa.v
 5.	It also establishes net connectivity and prepares all of this for simulation
    
 	After elaboration the file will come under snapshot. Select the test bench and elaborate it.
-
+![image](https://github.com/user-attachments/assets/1b5de50d-8a59-4b73-b410-2641a842c2ab)
 ### Fig 9: Elaboration Launch Option
 
 ## Step 3: Simulation: – Simulate with the given test vectors over a period of time to observe the output behaviour. 
@@ -165,17 +226,15 @@ i.e Cadence IES command for compile: ncverilog +access+rwc -compile fa.v
 	Simulation allow to dump design and test bench signals into a waveform 
 
 	Steps for simulation – Run the simulation command with simulator options
-
+![image](https://github.com/user-attachments/assets/59dd839f-ee18-4cba-8714-8f6d38f0710f)
 ### Fig 10: Design Browser window for simulation
-
+![image](https://github.com/user-attachments/assets/3e504e1e-b2dd-4146-940e-5dc99ba7c9a2)
 ### Fig 11: Launching Simulation Waveform WindowSimulation Waveform Window
-
+![image](https://github.com/user-attachments/assets/cfa14424-0fab-42c9-bde1-b470cb344483)
 ### Fig 12: Simulation Waveform Window
 
 ### Result:
-
-The functionality of a 4-bit adder was successfully verified using a test bench and simulated with the nclaunch tool.
-
+The verilog code for 4bit adder and verify the functionality using Test bench has been done and verified.
 
 
 
