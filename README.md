@@ -58,6 +58,7 @@ Note : File name should be with HDL Extension
 •	fa_4bit_test.v → Test bench 
 
 CODE
+
 module full_adder(A,B,CIN,S,COUT);
 
 input A,B,CIN;
